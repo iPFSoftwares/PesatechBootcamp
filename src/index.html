@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+		<script src="https://cdn.tailwindcss.com"></script>
+	</head>
+
+	<body>
+		<main>
+			<!-- main section -->
+			<section
+				style="background: linear-gradient(135deg, #e09, #d0e)"
+				class="h-screen"
+			>
+				<!-- container -->
+				<div
+					class="container h-full mx-auto flex justify-center items-center"
+				>
+					<!-- calculator -->
+					<div
+						class="w-full max-w-sm overflow-hidden rounded-[2rem] h-[45rem] bg-[#ebebeb]"
+					>
+						<!-- calculator screen -->
+						<div
+							class="h-60 w-full text-white py-5 px-8 flex justify-end items-end flex-col space-y-8 shink-0"
+						>
+							<!-- answer display -->
+							<h1
+								id="answer"
+								class="text-6xl tracking-wide text-[#253440]"
+							>
+								0
+							</h1>
+
+							<p id="input" class="text-[#707e88] text-lg input">
+								0
+							</p>
+						</div>
+
+						<!-- buttons -->
+						<div class="h-full buttons-container p-5 space-y-5">
+							<!-- ac, delete,% and divide buttons -->
+							<div class="grid grid-cols-4 gap-x-4">
+								<div class="">
+									<button
+										operator="clear"
+										class="w-full operator h-16 bg-black/50 shadow shadow-[#e0e2e1] text-[#aaabaf] text-xl font-medium justify-center items-center flex rounded"
+									>
+										AC
+									</button>
+								</div>
+
+								<div class="">
+									<button
+										operator="delete"
+										class="w-full operator h-16 bg-black/50 shadow shadow-[#e0e2e1] text-[#aaabaf] text-xl font-medium justify-center items-center flex rounded"
+									>
+										DEL
+									</button>
+								</div>
+
+								<div class="">
+									<button
+										class="w-full h-16 bg-black/50 shadow shadow-[#e0e2e1] text-[#aaabaf] text-xl font-medium justify-center items-center flex rounded"
+									>
+										%
+									</button>
+								</div>
+
+								<div class="">
+									<button
+										class="w-full h-16 bg-black/50 shadow shadow-[#e0e2e1] text-[#aaabaf] text-xl font-medium justify-center items-center flex rounded"
+									>
+										÷
+									</button>
+								</div>
+							</div>
+
+							<!-- 7, 8,9 and multiply buttons -->
+							<div class="grid grid-cols-4 gap-x-4">
+								<div class="">
+									<button
+										class="w-full number h-16 bg-black/50 shadow shadow-[#e0e2e1] text-[#aaabaf] text-xl font-medium justify-center items-center flex rounded"
+									>
+										7
+									</button>
+								</div>
+
+								<div class="">
+									<button
+										class="w-full number h-16 bg-black/50 shadow shadow-[#e0e2e1] text-[#aaabaf] text-xl font-medium justify-center items-center flex rounded"
+									>
+										8
+									</button>
+								</div>
+
+								<div class="">
+									<button
+										class="w-full number h-16 bg-black/50 shadow shadow-[#e0e2e1] text-[#aaabaf] text-xl font-medium justify-center items-center flex rounded"
+									>
+										9
+									</button>
+								</div>
+
+								<div class="">
+									<button
+										class="w-full h-16 bg-black/50 shadow shadow-[#e0e2e1] text-[#aaabaf] text-xl font-medium justify-center items-center flex rounded"
+									>
+										x
+									</button>
+								</div>
+							</div>
+
+							<!-- 4, 5, 6 subtract buttons -->
+							<div class="grid grid-cols-4 gap-x-4">
+								<div class="">
+									<button
+										class="w-full h-16 number bg-black/50 shadow shadow-[#e0e2e1] text-[#aaabaf] text-xl font-medium justify-center items-center flex rounded"
+									>
+										4
+									</button>
+								</div>
+
+								<div class="">
+									<button
+										class="w-full number h-16 bg-black/50 shadow shadow-[#e0e2e1] text-[#aaabaf] text-xl font-medium justify-center items-center flex rounded"
+									>
+										5
+									</button>
+								</div>
+
+								<div class="">
+									<button
+										class="w-full number h-16 bg-black/50 shadow shadow-[#e0e2e1] text-[#aaabaf] text-xl font-medium justify-center items-center flex rounded"
+									>
+										6
+									</button>
+								</div>
+
+								<div class="">
+									<button
+										class="w-full h-16 bg-black/50 shadow shadow-[#e0e2e1] text-[#aaabaf] text-xl font-medium justify-center items-center flex rounded"
+									>
+										-
+									</button>
+								</div>
+							</div>
+
+							<!-- 1, 2,3 and add buttons -->
+							<div class="grid grid-cols-4 gap-x-4">
+								<div class="">
+									<button
+										class="w-full h-16 number bg-black/50 shadow shadow-[#e0e2e1] text-[#aaabaf] text-xl font-medium justify-center items-center flex rounded"
+									>
+										1
+									</button>
+								</div>
+
+								<div class="">
+									<button
+										class="w-full h-16 number bg-black/50 shadow shadow-[#e0e2e1] text-[#aaabaf] text-xl font-medium justify-center items-center flex rounded"
+									>
+										2
+									</button>
+								</div>
+
+								<div class="">
+									<button
+										class="w-full h-16 number bg-black/50 shadow shadow-[#e0e2e1] text-[#aaabaf] text-xl font-medium justify-center items-center flex rounded"
+									>
+										3
+									</button>
+								</div>
+
+								<div class="">
+									<button
+										operator="plus"
+										class="w-full h-16 bg-black/50 operator shadow shadow-[#e0e2e1] text-[#aaabaf] text-xl font-medium justify-center items-center flex rounded"
+									>
+										+
+									</button>
+								</div>
+							</div>
+
+							<!-- 0, ., = buttons -->
+							<div class="grid grid-cols-4 gap-x-4">
+								<div class="">
+									<button
+										class="w-full number h-16 bg-black/50 shadow shadow-[#e0e2e1] text-[#aaabaf] text-xl font-medium justify-center items-center flex rounded"
+									>
+										0
+									</button>
+								</div>
+
+								<div class="">
+									<button
+										class="w-full h-16 bg-black/50 shadow shadow-[#e0e2e1] text-[#aaabaf] text-xl font-medium justify-center items-center flex rounded"
+									>
+										.
+									</button>
+								</div>
+
+								<div class="col-span-2">
+									<button
+										operator="equal"
+										class="w-full h-16 operator bg-black/50 shadow shadow-[#e0e2e1] text-[#aaabaf] text-xl font-medium justify-center items-center flex rounded-lg"
+									>
+										=
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+		<script src="./bundle.js"></script>
+	</body>
+</html>
