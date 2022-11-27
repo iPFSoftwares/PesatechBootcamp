@@ -1,26 +1,67 @@
-# Use the latest 2.1 version of CircleCI pipeline process engine.
-# See: https://circleci.com/docs/2.0/configuration-reference
 version: 2.1
 
-# Define a job to be invoked later in a workflow.
-# See: https://circleci.com/docs/2.0/configuration-reference/#jobs
-jobs:
-  say-hello:
-    # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
-    # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor
-    docker:
-      - image: cimg/base:stable
-    # Add steps to the job
-    # See: https://circleci.com/docs/2.0/configuration-reference/#steps
+container_config: &container_config
+  docker:
+    - image: circleci/node:11.0.0
+
+commands:
+  setup_project_files:
+    description: Checkout and install npm packages
     steps:
       - checkout
       - run:
-          name: "Say hello"
-          command: "echo Hello, World!"
+          name: Install npm packages
+          command: yarn
 
-# Invoke jobs via workflows
-# See: https://circleci.com/docs/2.0/configuration-reference/#workflows
+jobs:
+  run_unit_tests:
+    <<: *container_config
+    steps:
+      - setup_project_files
+      - run:
+          name: Run Unit Tests
+          command: yarn test:unit
+  check_code_style:
+    <<: *container_config
+    steps:
+      - setup_project_files
+      - run:
+          name: Inspect code style
+          command: yarn lint
+  deploy_to_staging:
+    <<: *container_config
+    steps:
+      - add_ssh_keys:
+          fingerprints:
+            - ${SSH_FINGERPRINT}
+      - run:
+          name: Deploy to staging
+          command: |
+            ssh -o StrictHostKeyChecking=no ${SSH_USER}@${SSH_HOST} "cd /var/www/overdraft-cms && git stash && git pull origin develop && chmod 777 /var/www/overdraft-cms/.circleci/post-install.sh && /var/www/overdraft-cms/.circleci/post-install.sh"
+  deploy_to_production:
+    <<: *container_config
+    steps:
+      - add_ssh_keys:
+          fingerprints:
+            - ${SSH_FINGERPRINT_PROD}
+      - run:
+          name: Deploy to production
+          command: |
+            ssh -o StrictHostKeyChecking=no ${SSH_USER_PROD}@${SSH_HOST_PROD} "cd /var/www/overdraft-cms && git stash && git pull origin master && sudo chmod 777 /var/www/overdraft-cms/.circleci/post-install.sh && /var/www/overdraft-cms/.circleci/post-install.sh"
 workflows:
-  say-hello-workflow:
+  version: 2.1
+  build:
     jobs:
-      - say-hello
+      # - run_unit_tests
+      # - check_code_style
+      - deploy_to_staging:
+          # requires:
+            # - run_unit_tests
+            # - check_code_style
+          filters:
+            branches:
+              only: develop
+      - deploy_to_production:
+          filters:
+            branches:
+              only: master
