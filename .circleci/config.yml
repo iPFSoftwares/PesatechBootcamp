@@ -37,7 +37,7 @@ jobs:
       - run:
           name: Deploy to staging
           command: |
-            ssh -o StrictHostKeyChecking=no ${SSH_USER}@${SSH_HOST} "cd /var/www/overdraft-cms && git stash && git pull origin develop && chmod 777 /var/www/overdraft-cms/.circleci/post-install.sh && /var/www/overdraft-cms/.circleci/post-install.sh"
+            ssh -o StrictHostKeyChecking=no ${SSH_USER}@${SSH_HOST} "cd /var/www/html/PesatechBootcamp && git stash && git pull origin develop && chmod 777 /var/www/html/PesatechBootcamp/.circleci/post-install.sh && /var/www/html/PesatechBootcamp/.circleci/post-install.sh"
   deploy_to_production:
     <<: *container_config
     steps:
@@ -47,7 +47,7 @@ jobs:
       - run:
           name: Deploy to production
           command: |
-            ssh -o StrictHostKeyChecking=no ${SSH_USER_PROD}@${SSH_HOST_PROD} "cd /var/www/overdraft-cms && git stash && git pull origin master && sudo chmod 777 /var/www/overdraft-cms/.circleci/post-install.sh && /var/www/overdraft-cms/.circleci/post-install.sh"
+            ssh -o StrictHostKeyChecking=no ${SSH_USER_PROD}@${SSH_HOST_PROD} "cd /var/www/html/PesatechBootcamp && git stash && git pull origin main && sudo chmod 777 /var/www/html/PesatechBootcamp/.circleci/post-install.sh && /var/www/html/PesatechBootcamp/.circleci/post-install.sh"
 workflows:
   version: 2.1
   build:
@@ -64,4 +64,4 @@ workflows:
       - deploy_to_production:
           filters:
             branches:
-              only: master
+              only: main
