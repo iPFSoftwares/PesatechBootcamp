@@ -1,10 +1,13 @@
 const sum = require("./sum");
+const division = require("./division");
 const subtract = require("./subtract");
+
 
 const answerElement = document.getElementById("answer");
 const inputElement = document.getElementById("input");
 const numElements = Array.from(document.querySelectorAll(".number"));
 const operatorBtn = Array.from(document.querySelectorAll(".operator"));
+const _operator = "";
 let firstValue;
 
 numElements.forEach((btn) => {
@@ -19,7 +22,7 @@ function handleButtonClick({ target }) {
 	}
 	inputElement.append(target.innerText);
 }
-
+let result;
 operatorBtn.forEach((btn) => {
 	btn.addEventListener("click", ({ target }) => {
 		const inputValue = inputElement.innerText;
@@ -33,6 +36,39 @@ operatorBtn.forEach((btn) => {
 			}
 
 			inputElement.append("+");
+
+		} 
+		else if (operator === "divide") {
+			
+			console.log("divide");
+	
+			if (inputValue[0] === "/" || inputValue.at(-1) === "/") {
+				return;
+			}
+			
+	
+			inputElement.append("/");
+		} 
+		else if (operator === "equal") {
+
+			if(inputValue.includes("+")){
+				const values = inputValue.split("+");
+				console.log("values", values);
+
+				 result = values.reduce((lastSum, value) => {
+					return sum(parseInt(lastSum), parseInt(value));
+				});
+
+
+			} else if(inputValue.includes("/")){
+				const values = inputValue.split("/");
+				console.log("values", values);
+
+				 result = values.reduce((lastSum, value) => {
+					return division(parseInt(lastSum), parseInt(value));
+				});
+			}
+
 
 		}else if (operator === "subtract") {
 			console.log("inputValue operator: ", inputValue);
@@ -57,6 +93,7 @@ operatorBtn.forEach((btn) => {
 			}
 			answerElement.innerText = result ?? 0;
 
+
 		} else if (operator === "clear") {
 			inputElement.innerText = "0";
 			answerElement.innerText = "0";
@@ -67,5 +104,6 @@ operatorBtn.forEach((btn) => {
 				inputValue.length - 1
 			);
 		}
+		answerElement.innerText = result ?? 0;
 	});
 });
