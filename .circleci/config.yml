@@ -54,13 +54,13 @@ workflows:
     jobs:
       # - run_unit_tests
       # - check_code_style
-      - deploy_to_staging:
+      #- deploy_to_staging:
           # requires:
             # - run_unit_tests
             # - check_code_style
-          filters:
-            branches:
-              only: develop
+          #filters:
+            #branches:
+              #only: develop
       - deploy_to_production:
           filters:
             branches:
