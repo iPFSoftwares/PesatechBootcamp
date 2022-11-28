@@ -1,9 +1,13 @@
 const sum = require("./sum");
+const mul = require("./mul");
+
+console.log('test');
 
 const answerElement = document.getElementById("answer");
 const inputElement = document.getElementById("input");
 const numElements = Array.from(document.querySelectorAll(".number"));
 const operatorBtn = Array.from(document.querySelectorAll(".operator"));
+
 let firstValue;
 
 numElements.forEach((btn) => {
@@ -31,15 +35,35 @@ operatorBtn.forEach((btn) => {
 			}
 
 			inputElement.append("+");
-		} else if (operator === "equal") {
-			const values = inputValue.split("+");
-			console.log("values", values);
+		}
 
-			const _sum = values.reduce((lastSum, value) => {
-				return sum(parseInt(lastSum), parseInt(value));
-			});
-			answerElement.innerText = _sum ?? 0;
-		} else if (operator === "clear") {
+		else if (operator === "multiply") {
+			if (inputValue[0] === "x" || inputValue.at(-1) === "x") {
+				return;
+			}
+
+			inputElement.append("x");
+		}
+		
+		else if (operator === "equal") {
+			let ans;
+			if (inputValue.includes("+")) {
+				const values = inputValue.split("+");
+				console.log("values", values);
+				ans = values.reduce((lastSum, value) => {
+					return sum(parseInt(lastSum), parseInt(value));
+				});
+			} else if (inputValue.includes("x")) {
+				const values = inputValue.split("x");
+				console.log(values);
+				ans = values.reduce((lastSum, value) => {
+					return mul(parseInt(lastSum), parseInt(value));
+				});
+			}
+			answerElement.innerText = ans ?? 0;
+		}
+		
+		else if (operator === "clear") {
 			inputElement.innerText = "0";
 			answerElement.innerText = "0";
 		} else if (operator === "delete") {
