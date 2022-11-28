@@ -20,7 +20,7 @@ jobs:
       - setup_project_files
       - run:
           name: Run Unit Tests
-          command: yarn test:unit
+          command: yarn test
   check_code_style:
     <<: *container_config
     steps:
@@ -52,15 +52,15 @@ workflows:
   version: 2.1
   build:
     jobs:
-      # - run_unit_tests
+      - run_unit_tests
       # - check_code_style
-      #- deploy_to_staging:
-          # requires:
-            # - run_unit_tests
+      - deploy_to_staging:
+           requires:
+             - run_unit_tests
             # - check_code_style
-          #filters:
-            #branches:
-              #only: develop
+          filters:
+            branches:
+              only: develop
       - deploy_to_production:
           filters:
             branches:
