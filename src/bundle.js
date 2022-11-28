@@ -1,10 +1,27 @@
 (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
+const division = (a, b) => {
+	if (typeof a != "number" || typeof b != "number" ) {
+		throw `invalid data type`;
+	} 
+	try{
+		return a / b;
+	} catch (e){
+		console.log(e);
+	}
+	
+};
+
+module.exports = division;
+
+},{}],2:[function(require,module,exports){
 const sum = require("./sum");
+const division = require("./division");
 
 const answerElement = document.getElementById("answer");
 const inputElement = document.getElementById("input");
 const numElements = Array.from(document.querySelectorAll(".number"));
 const operatorBtn = Array.from(document.querySelectorAll(".operator"));
+const _operator = "";
 let firstValue;
 
 numElements.forEach((btn) => {
@@ -19,7 +36,7 @@ function handleButtonClick({ target }) {
 	}
 	inputElement.append(target.innerText);
 }
-
+let result;
 operatorBtn.forEach((btn) => {
 	btn.addEventListener("click", ({ target }) => {
 		const inputValue = inputElement.innerText;
@@ -32,14 +49,37 @@ operatorBtn.forEach((btn) => {
 			}
 
 			inputElement.append("+");
-		} else if (operator === "equal") {
-			const values = inputValue.split("+");
-			console.log("values", values);
+		} 
+		else if (operator === "divide") {
+			
+			console.log("divide");
+	
+			if (inputValue[0] === "/" || inputValue.at(-1) === "/") {
+				return;
+			}
+			
+	
+			inputElement.append("/");
+		} 
+		else if (operator === "equal") {
 
-			const _sum = values.reduce((lastSum, value) => {
-				return sum(parseInt(lastSum), parseInt(value));
-			});
-			answerElement.innerText = _sum ?? 0;
+			if(inputValue.includes("+")){
+				const values = inputValue.split("+");
+				console.log("values", values);
+
+				 result = values.reduce((lastSum, value) => {
+					return sum(parseInt(lastSum), parseInt(value));
+				});
+
+
+			} else if(inputValue.includes("/")){
+				const values = inputValue.split("/");
+				console.log("values", values);
+
+				 result = values.reduce((lastSum, value) => {
+					return division(parseInt(lastSum), parseInt(value));
+				});
+			}
 		} else if (operator === "clear") {
 			inputElement.innerText = "0";
 			answerElement.innerText = "0";
@@ -49,10 +89,10 @@ operatorBtn.forEach((btn) => {
 				inputValue.length - 1
 			);
 		}
+		answerElement.innerText = result ?? 0;
 	});
 });
-
-},{"./sum":2}],2:[function(require,module,exports){
+},{"./division":1,"./sum":3}],3:[function(require,module,exports){
 const sum = (a, b) => {
 	if (typeof a != "number" || typeof b != "number") {
 		throw `invalid data type`;
@@ -62,4 +102,4 @@ const sum = (a, b) => {
 
 module.exports = sum;
 
-},{}]},{},[1]);
+},{}]},{},[2]);
